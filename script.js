@@ -31,7 +31,8 @@ function addMouseoverListeners(selectedColor) {
       }
     });
 
-    cell.addEventListener("touchstart", () => {
+    cell.addEventListener("touchstart", (event) => {
+      event.preventDefault();
       isDrawing = true;
       cell.style.backgroundColor = selectedColor;
     });
