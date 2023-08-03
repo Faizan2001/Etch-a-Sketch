@@ -15,8 +15,6 @@ function clearGrid() {
   }
 }
 
-
-
 function addMouseoverListeners(selectedColor) {
   cells.forEach((cell) => {
     cell.addEventListener("mouseover", () => {
@@ -36,11 +34,15 @@ function removeAllEventListeners() {
 // Body of the code below
 
 const container = document.querySelector(".container");
+const resetButton = document.getElementById("reset-button");
 createGrid(16, 16);
-
+let colorPicker = document.getElementById("color-picker");
+const colorPickerButton = document.getElementById("color-picker-button");
 let cells = document.querySelectorAll(".cell"); // Initialize the cells array here
-
 const rainbowBtn = document.querySelector(".rainbowBtn");
+
+
+
 rainbowBtn.addEventListener("click", () => {
   removeAllEventListeners(); // Remove previous event listeners
 
@@ -55,7 +57,7 @@ rainbowBtn.addEventListener("click", () => {
   });
 });
 
-const resetButton = document.getElementById("reset-button");
+
 resetButton.addEventListener("click", () => {
   let gridSize = prompt("Enter the number of squares per side (up to 100):");
   gridSize = parseInt(gridSize);
@@ -66,13 +68,10 @@ resetButton.addEventListener("click", () => {
 
   clearGrid();
   createGrid(gridSize, gridSize);
-
-  
- 
+  cells = document.querySelectorAll(".cell");
 });
 
-const colorPickerButton = document.getElementById("color-picker-button");
-const colorPicker = document.getElementById("color-picker");
+
 
 colorPickerButton.addEventListener("click", () => {
   removeAllEventListeners();
@@ -83,6 +82,5 @@ colorPickerButton.addEventListener("click", () => {
 colorPicker.addEventListener("input", () => {
   const selectedColor = colorPicker.value;
 
-  removeAllEventListeners(); // Remove previous event listeners
   addMouseoverListeners(selectedColor);
 });
