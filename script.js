@@ -20,6 +20,37 @@ function addMouseoverListeners(selectedColor) {
     cell.addEventListener("mouseover", () => {
       cell.style.backgroundColor = selectedColor;
     });
+    cell.addEventListener("mousedown", () => {
+      isDrawing = true;
+      cell.style.backgroundColor = selectedColor;
+    });
+
+    cell.addEventListener("mousemove", () => {
+      if (isDrawing) {
+        cell.style.backgroundColor = selectedColor;
+      }
+    });
+
+    cell.addEventListener("touchstart", () => {
+      isDrawing = true;
+      cell.style.backgroundColor = selectedColor;
+    });
+
+    cell.addEventListener("touchmove", (event) => {
+      if (isDrawing) {
+        event.preventDefault(); // Prevent scrolling while drawing
+        cell.style.backgroundColor = selectedColor;
+      }
+    });
+
+    // Add touchend event to stop drawing on touch release
+    cell.addEventListener("mouseup", () => {
+      isDrawing = false;
+    });
+
+    cell.addEventListener("touchend", () => {
+      isDrawing = false;
+    });
   });
 }
 
@@ -41,8 +72,6 @@ const colorPickerButton = document.getElementById("color-picker-button");
 let cells = document.querySelectorAll(".cell"); // Initialize the cells array here
 const rainbowBtn = document.querySelector(".rainbowBtn");
 
-
-
 rainbowBtn.addEventListener("click", () => {
   removeAllEventListeners(); // Remove previous event listeners
 
@@ -56,7 +85,6 @@ rainbowBtn.addEventListener("click", () => {
   });
 });
 
-
 resetButton.addEventListener("click", () => {
   let gridSize = prompt("Enter the number of squares per side (up to 100):");
   gridSize = parseInt(gridSize);
@@ -69,8 +97,6 @@ resetButton.addEventListener("click", () => {
   createGrid(gridSize, gridSize);
   cells = document.querySelectorAll(".cell");
 });
-
-
 
 colorPickerButton.addEventListener("click", () => {
   removeAllEventListeners();

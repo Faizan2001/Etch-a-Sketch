@@ -18,7 +18,7 @@ body {
 }
 
 .cell {
- /* border: 1px solid lightgray; */
+  border: 1px solid lightgray;
   transition: background-color 0.1s;
   box-sizing: border-box;
   cursor: pointer;
@@ -30,9 +30,8 @@ button {
 }
 
 h1 {
-    margin-bottom: 0;
+  margin-bottom: 10px;
 }
-
 
 /* Style for the button */
 button {
