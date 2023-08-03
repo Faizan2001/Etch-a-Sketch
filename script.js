@@ -46,7 +46,6 @@ const rainbowBtn = document.querySelector(".rainbowBtn");
 rainbowBtn.addEventListener("click", () => {
   removeAllEventListeners(); // Remove previous event listeners
 
-  cells = document.querySelectorAll(".cell"); // Update the cells array with new cells
   cells.forEach((cell) => {
     cell.addEventListener("mouseover", () => {
       addMouseoverListeners(`rgb(
