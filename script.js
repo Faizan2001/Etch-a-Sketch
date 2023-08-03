@@ -15,23 +15,45 @@ function clearGrid() {
   }
 }
 
-function initSketchpad(row, column) {
-  createGrid(row, column);
 
-  const colorPicker = document.getElementById("color-picker");
-  const cells = document.querySelectorAll(".cell");
+
+function addMouseoverListeners(selectedColor) {
   cells.forEach((cell) => {
     cell.addEventListener("mouseover", () => {
-      const selectedColor = colorPicker.value;
       cell.style.backgroundColor = selectedColor;
     });
   });
 }
 
+function removeAllEventListeners() {
+  cells.forEach((cell) => {
+    const newCell = cell.cloneNode(true);
+    cell.parentNode.replaceChild(newCell, cell);
+  });
+  cells = document.querySelectorAll(".cell");
+}
+
 // Body of the code below
 
 const container = document.querySelector(".container");
-initSketchpad(16,16);
+createGrid(16, 16);
+
+let cells = document.querySelectorAll(".cell"); // Initialize the cells array here
+
+const rainbowBtn = document.querySelector(".rainbowBtn");
+rainbowBtn.addEventListener("click", () => {
+  removeAllEventListeners(); // Remove previous event listeners
+
+  cells = document.querySelectorAll(".cell"); // Update the cells array with new cells
+  cells.forEach((cell) => {
+    cell.addEventListener("mouseover", () => {
+      addMouseoverListeners(`rgb(
+        ${Math.floor(Math.random() * 256)},
+        ${Math.floor(Math.random() * 256)},
+        ${Math.floor(Math.random() * 256)})`);
+    });
+  });
+});
 
 const resetButton = document.getElementById("reset-button");
 resetButton.addEventListener("click", () => {
@@ -43,5 +65,24 @@ resetButton.addEventListener("click", () => {
   }
 
   clearGrid();
-  initSketchpad(gridSize,gridSize)
+  createGrid(gridSize, gridSize);
+
+  
+ 
+});
+
+const colorPickerButton = document.getElementById("color-picker-button");
+const colorPicker = document.getElementById("color-picker");
+
+colorPickerButton.addEventListener("click", () => {
+  removeAllEventListeners();
+
+  colorPicker.click();
+});
+
+colorPicker.addEventListener("input", () => {
+  const selectedColor = colorPicker.value;
+
+  removeAllEventListeners(); // Remove previous event listeners
+  addMouseoverListeners(selectedColor);
 });
