@@ -20,6 +20,7 @@ function addMouseoverListeners(selectedColor) {
     cell.addEventListener("mouseover", () => {
       cell.style.backgroundColor = selectedColor;
     });
+
     cell.addEventListener("mousedown", () => {
       isDrawing = true;
       cell.style.backgroundColor = selectedColor;
@@ -35,14 +36,34 @@ function addMouseoverListeners(selectedColor) {
       event.preventDefault();
       isDrawing = true;
       cell.style.backgroundColor = selectedColor;
+
+      // Attach touchmove and touchend listeners to the cell
+      cell.addEventListener("touchmove", touchMoveHandler);
+      cell.addEventListener("touchend", touchEndHandler);
     });
 
-    cell.addEventListener("touchmove", (event) => {
+    function touchMoveHandler(event) {
       if (isDrawing) {
-        event.preventDefault(); // Prevent scrolling while drawing
-        cell.style.backgroundColor = selectedColor;
+        event.preventDefault();
+        const touch = event.touches[0];
+        const rect = cell.getBoundingClientRect();
+        if (
+          touch.clientX >= rect.left &&
+          touch.clientX <= rect.right &&
+          touch.clientY >= rect.top &&
+          touch.clientY <= rect.bottom
+        ) {
+          cell.style.backgroundColor = selectedColor;
+        }
       }
-    });
+    }
+
+    function touchEndHandler() {
+      isDrawing = false;
+      // Remove touchmove and touchend listeners from the cell
+      cell.removeEventListener("touchmove", touchMoveHandler);
+      cell.removeEventListener("touchend", touchEndHandler);
+    }
 
     // Add touchend event to stop drawing on touch release
     cell.addEventListener("mouseup", () => {
